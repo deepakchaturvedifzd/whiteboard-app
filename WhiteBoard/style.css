@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
 * {
   margin: 0%;
   padding: 0%;
@@ -8,7 +9,7 @@ body {
   width: 100vw;
   margin: 0;
   padding: 30px;
-  font-family: sans-serif;
+  font-family: Poppins;
   overflow: hidden;
   background: rgb(68, 68, 68);
 }
@@ -116,6 +117,9 @@ canvas {
 .erase:hover + .tooltiptxt-eraser {
   visibility: visible;
 }
+.shape:hover + .tooltiptxt-shape {
+  visibility: visible;
+}
 
 .color-field:hover + .tooltiptxt-bgcolors {
   visibility: visible;
@@ -132,10 +136,10 @@ canvas {
   margin: 0 10px;
 }
 
-canvas:hover {
-  /* cursor: url("pen.gif"), default; */
-  cursor: crosshair;
+.drawing {
+  cursor: url("penpng.gif") 0 62, default;
+  /* cursor: crosshair;*/
 }
 .erasing {
-  cursor: "url(./pen.gif)";
+  cursor: url("eraserpng.png")0 24,default;
 }
