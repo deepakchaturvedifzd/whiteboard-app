@@ -19,17 +19,23 @@
       crossorigin="anonymous"
     />
     <div class="field">
-      <canvas id="canvas" href="#"> </canvas>
+      <canvas id="canvas" href="#" width="window.innerWidth" height="window.innerHeight"> </canvas>
+              <div id="output">
+              
+              </div>
       <div class="tools">
+
         <div class="picker">
-          <span><i class="fas fa-pen" style="font-size: 25px;"></i></span>
+
           <input
             onInput="draw_color=this.value"
             type="color"
             class="color-picker"
           />
           <span class="tooltiptxt-pen tooltiptxt">I am a pen</span>
+            <span><i class="fas fa-pen" style="font-size: 25px;"></i></span>
         </div>
+
         <input
           type="range"
           min="1"
@@ -38,19 +44,6 @@
           class="pen-range"
           onInput="draw_width=this.value"
         />
-
-        <div class="eraser">
-          <button class="erase" onclick="erase()">
-            <i class="fa fa-eraser" style="font-size: 25px;"></i>
-          </button>
-          <span class="tooltiptxt-eraser tooltiptxt">Click to erase !</span>
-        </div>
-        <div class="shape">
-          <button class="shape" onclick="shapes()">
-            <i class="fas fa-shapes" style="font-size: 25px;"></i>
-          </button>
-          <span class="tooltiptxt-shape tooltiptxt">Click to add shape</span>
-        </div>
 
         <div class="bg-colors">
           <div
@@ -79,18 +72,42 @@
           <span class="tooltiptxt-bgcolors tooltiptxt">New Background</span>
         </div>
 
-        <div class="undo-container">
-          <button onClick="undo_last()" class="undo">
-            <i class="fa fa-undo" style="font-size: 25px;"></i>
-          </button>
-          <span class="tooltiptxt tooltiptxt-undo">Undo !! Oh Shit!</span>
+        <div class="btn-container">
+          <div class="eraser">
+            <button class="erase" onclick="erase()">
+              <i class="fa fa-eraser" style="font-size: 25px;"></i>
+            </button>
+            <span class="tooltiptxt-eraser tooltiptxt">Click to erase !</span>
+          </div>
+
+          <div class="shape">
+            <button class="shape-btn" onclick="is_shapes()">
+              <i class="fas fa-shapes" style="font-size: 25px;"></i>
+            </button>
+            <span class="tooltiptxt-shape tooltiptxt">Click to add shape</span>
+          </div>
+
+          <div class="text">
+            <button class="add-txt"><i class="fas fa-font" style="font-size: 25px;"></i></button>
+            <span class="tooltiptxt-text tooltiptxt">Click to add text</span>
+          </div>
+
+          <div class="undo-container">
+            <button onClick="undo_last()" class="undo">
+              <i class="fa fa-undo" style="font-size: 25px;"></i>
+            </button>
+            <span class="tooltiptxt tooltiptxt-undo">Undo !! Oh Shit!(CTRL+Z)</span>
+          </div>
+
+          <div class="clear-container">
+            <button onClick="clear_canvas()" class="clear">
+              <i class="fa fa-trash" style="font-size: 25px;"></i>
+            </button>
+            <span class="tooltiptxt tooltiptxt-clear">Clear</span>
+          </div>
         </div>
-        <div class="clear-container">
-          <button onClick="clear_canvas()" class="clear">
-            <i class="fa fa-trash" style="font-size: 25px;"></i>
-          </button>
-          <span class="tooltiptxt tooltiptxt-clear">Clear</span>
-        </div>
+
+       
       </div>
     </div>
   </body>

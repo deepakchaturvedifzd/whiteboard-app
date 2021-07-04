@@ -1,6 +1,7 @@
 const canvas = document.getElementById("canvas");
-canvas.width = window.innerWidth - 60;
-canvas.height = window.innerHeight - 150;
+const range=document.querySelector(".pen-range");
+canvas.width = window.innerWidth;// - 60;
+canvas.height = window.innerHeight;// - 150;
 
 let context = canvas.getContext("2d");
 let start_background_color = "white";
@@ -13,7 +14,16 @@ let is_drawing = false;
 let restore_array = [];
 let index = -1;
 let is_erasing = false;
+let is_drawing_shapes=false
 let last_color;
+
+window.addEventListener('resize',(()=>{
+canvas.width = window.innerWidth;// - 60;
+canvas.height = window.innerHeight;
+context = canvas.getContext("2d");
+context.fillStyle = start_background_color;
+context.fillRect(0, 0, canvas.width, canvas.height);
+}));
 
 canvas.addEventListener("touchstart", start, false);
 canvas.addEventListener("touchmove", draw, false);
@@ -23,40 +33,9 @@ canvas.addEventListener("mousemove", draw, false);
 canvas.addEventListener("touchend", stop, false);
 canvas.addEventListener("mouseup", stop, false);
 canvas.addEventListener("mouseout", stop, false);
+
+canvas.addEventListener('mousedown',circle,false);
 canvas.classList.add("drawing");
-function shapes() {
-  var canva = new fabric.Canvas("canvas");
-
-  // create a rectangle object
-  // var rect = new fabric.Rect({
-  //  left: 100,
-  //  top: 100,
-  //  fill: 'red',
-  //  width: 20,
-  //  height: 20
-  // });
-
-  // "add" rectangle onto canvas
-  //     canva.add(rect);
-  // }
-  canva.add(
-    new fabric.Rect({
-      top: 100,
-      left: 100,
-      width: 50,
-      height: 50,
-      fill: "#f55",
-    }),
-    new fabric.Circle({ top: 140, left: 230, radius: 75, fill: "green" }),
-    new fabric.Triangle({
-      top: 300,
-      left: 210,
-      width: 100,
-      height: 100,
-      fill: "blue",
-    })
-  );
-}
 
 document.addEventListener("keydown", function (event) {
   if (event.ctrlKey && event.key === "z") {
@@ -118,6 +97,7 @@ function change_color_bg(element) {
   if (!is_erasing) {
     is_erasing = true;
     canvas.classList.add("erasing");
+    last_color = draw_color;
     draw_color = start_background_color;
   }
   if (is_erasing) {
@@ -178,3 +158,38 @@ function erase() {
     draw_color = last_color;
   }
 }
+
+function is_shapes()
+{
+    if(is_drawing_shapes)
+    {
+      is_drawing_shapes=false;
+    }
+    else{
+      is_drawing_shapes=true;
+    }
+
+    console.log(range.value)
+}
+function circle(event)
+{
+
+  if(is_drawing_shapes)
+  {
+    // var radius = 10;
+    // context.beginPath();
+    // context.arc(event.clientX, event.clientY, radius*range.value, 0, 2 * Math.PI, false);
+    // context.lineWidth = 5;
+    // context.strokeStyle = '#003300';
+    // context.stroke();
+
+    // context.beginPath();
+    // context.rect(event.clientX, event.clientY, 150, 100);
+    // context.stroke();
+
+    //test
+
+  }
+
+}
+

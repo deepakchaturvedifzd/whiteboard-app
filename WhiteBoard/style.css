@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap");
 * {
   margin: 0%;
   padding: 0%;
@@ -8,116 +8,173 @@ body {
   height: 100vh;
   width: 100vw;
   margin: 0;
-  padding: 30px;
+  /* padding: 30px; */
   font-family: Poppins;
   overflow: hidden;
   background: rgb(68, 68, 68);
 }
 
 canvas {
-  box-shadow: -3px 2px 9px 6px black;
+  z-index: 1;
 }
 
 .field {
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  z-index: 0;
 }
 
 .tools {
+  margin: 0 0%;
+  position: fixed;
+  height: 8%;
+  width: 100%;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
+  bottom: 0;
   display: flex;
   justify-content: center;
   flex-direction: row;
-  margin-bottom: 15px;
+  z-index: 2;
+  background: rgb(117, 117, 117);
+  left: 50%;
+  transform: translate(-50%, 0);
+  box-shadow: -3px 2px 9px 6px black;
 }
-
+.bg-colors {
+  width: 17%;
+  display: flex;
+  justify-content: space-around;
+  padding: 0.6% 0%;
+  /* background-color: yellow; */
+}
 .tools .color-field {
-  height: 40px;
-  width: 40px;
-  min-height: 40px;
-  min-width: 40px;
+  height: 80%;
+  width: 12%;
   cursor: pointer;
-  display: inline-block;
+  /* display: inline-block; */
   box-sizing: border-box;
   border-radius: 50%;
-  border: 2px solid white;
+  border: 3px solid white;
   align-self: center;
-  margin: 0 15px;
-  margin-top: 5px;
+}
+
+.btn-container {
+  width: 30%;
+  display: flex;
+  justify-content: space-around;
+  padding: 0% 0%;
+  /* background-color: yellow; */
 }
 
 .tools button {
   align-self: center;
-  width: 100px;
-  height: 40px;
+  height: 80%;
+  width: 200%;
   border: 2px solid white;
   cursor: pointer;
   color: white;
   background: #222;
   font-weight: bold;
-  margin: 0 15px;
   font-size: 2rem;
-  margin-top: 5px;
+  margin: 25% 0%;
+}
+
+.picker {
+  width: 6%;
+  height: 60%;
+  display: flex;
+  justify-content: left;
+  /* background-color: yellow; */
+  margin: 0% 0%;
+  padding: 0.3% 0%;
+  z-index: 2;
 }
 
 .color-picker {
   align-self: centre;
   margin: 0 0;
-  margin-right: 15px;
-  width: 50px;
-  height: 50px;
+  margin: 0% 10%;
+  width: 200%;
+  height: 200%;
+  z-index: 2;
 }
 .picker i {
+  position: absolute;
   color: white;
   align-self: centre;
   font-size: 2rem;
   justify-self: center;
-  margin: 0;
-  padding: 0;
-  position: relative;
-  bottom: 18%;
-  left: 45%;
+  margin: 0.8% -3.8%;
+  padding: 0 0%;
   pointer-events: none;
+  z-index: 3 !important;
 }
 .tooltiptxt {
-  visibility: hidden;
+  visibility: visible;
   display: inline-block;
-  margin-left: -100px;
-  margin-top: -35px;
-  width: 120px;
   background-color: black;
   color: #fff;
   text-align: center;
-  padding: 5px 0;
   border-radius: 6px;
-
+  padding: 0% 0.5%;
   /* Position the tooltip text - see examples below! */
   position: absolute;
   z-index: 1;
 }
+.tooltiptxt-pen {
+  visibility: hidden;
+  margin-top: -2%;
+}
 .tooltiptxt-eraser {
-  margin-left: -120px;
+  margin-top: -5.7%;
+  margin-left: -2%;
+  visibility: hidden;
+  color: yellow;
 }
 .tooltiptxt-bgcolors {
-  width: 200px;
-  margin-left: -130px;
+  margin-left: 1%;
+  margin-top: -2.3%;
+  visibility: hidden;
+  color: yellow;
 }
-.tooltiptxt-undo,
+.tooltiptxt-undo {
+  margin-top: -5.7%;
+  margin-left: -4%;
+  visibility: hidden;
+  color: yellow;
+}
 .tooltiptxt-clear {
-  margin-left: -120px;
+  margin-top: -5.7%;
+  visibility: hidden;
+  color: yellow;
+}
+.tooltiptxt-shape {
+  margin-top: -5.7%;
+  margin-left: -3.2%;
+  color: yellow;
+  visibility: hidden;
+}
+.tooltiptxt-text {
+  margin-top: -5.5%;
+  margin-left: -3.2%;
+  color: yellow;
+  visibility: hidden;
 }
 .color-picker:hover {
   cursor: pointer;
 }
 .color-picker:hover + .tooltiptxt-pen {
   visibility: visible;
+  color: yellow;
 }
 .erase:hover + .tooltiptxt-eraser {
   visibility: visible;
 }
-.shape:hover + .tooltiptxt-shape {
+.shape-btn:hover + .tooltiptxt-shape {
+  visibility: visible;
+}
+.add-txt:hover + .tooltiptxt-text {
   visibility: visible;
 }
 
@@ -141,5 +198,38 @@ canvas {
   /* cursor: crosshair;*/
 }
 .erasing {
-  cursor: url("eraserpng.png")0 24,default;
+  cursor: url("eraserpng.png") 0 24, default;
+}
+
+.pen-range {
+  -webkit-appearance: none;
+  width: 12%;
+  height: 20%;
+  background: #ffffff;
+  outline: none;
+  opacity: 0.8;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.8s;
+}
+
+.pen-range:hover {
+  opacity: 1;
+}
+
+.pen-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12%;
+  height: 20px;
+  background: #646464;
+  border: 3px solid white;
+  border-radius: 25%;
+  cursor: pointer;
+}
+
+.pen-range::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: #04aa6d;
+  cursor: pointer;
 }
