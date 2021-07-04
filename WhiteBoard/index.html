@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="style.css" rel="stylesheet">
-    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 </head>
 <body>
     <div class="field">
@@ -17,21 +17,38 @@
 
         <div class="tools">
 
+            <div class="picker">
+            <span><i class="fa fa-pencil"></i></span>
             <input onInput="draw_color=this.value" type="color" class="color-picker">
+            <span class="tooltiptxt-pen tooltiptxt">I am a pen</span>
+            </div>
             <input  type="range" min="1" max="50" value="2" class="pen-range" onInput="draw_width=this.value">
-
-            <button class="erase" onclick="erase()">Erase</button>
-
-            <div onclick="change_color_bg(this)" class="color-field" style="background: rgb(221, 155, 155);"></div>
-            <div onclick="change_color_bg(this)" class="color-field" style="background: rgb(247, 247, 247);"></div>
-            <div onclick="change_color_bg(this)" class="color-field" style="background: rgb(230, 230, 171);"></div>
-            <div onclick="change_color_bg(this)" class="color-field" style="background: rgb(154, 226, 154);"></div>
-
-            <button onClick="undo_last()" class="undo">Undo</button>
-            <button onClick="clear_canvas()" class="clear">Clear</button>
+            
+            <div class="eraser">
+            <button class="erase" onclick="erase()"><i class="fa fa-eraser"></i></button>
+            <span class="tooltiptxt-eraser tooltiptxt">Click to erase !</span>
+            </div>
 
 
+            <div class="bg-colors">
+            <div onclick="change_color_bg(this)" class="color-field color1" style="background: rgb(221, 155, 155);"></div>
+                <span class="tooltiptxt-bgcolors tooltiptxt">New Background</span>
+            <div onclick="change_color_bg(this)" class="color-field color2" style="background: rgb(247, 247, 247);"></div>
+                <span class="tooltiptxt-bgcolors tooltiptxt">New Background</span>
+            <div onclick="change_color_bg(this)" class="color-field color3" style="background: rgb(230, 230, 171);"></div>
+                <span class="tooltiptxt-bgcolors tooltiptxt">New Background</span>
+            <div onclick="change_color_bg(this)" class="color-field color4" style="background: rgb(154, 226, 154);"></div>
+            <span class="tooltiptxt-bgcolors tooltiptxt">New Background</span>
+            </div>
 
+            <div class="undo-container">
+            <button onClick="undo_last()" class="undo"><i class="fa fa-undo"></i></button>
+            <span class="tooltiptxt tooltiptxt-undo">Undo !! Oh Shit!</span>
+            </div>
+            <div class="clear-container">
+                <button onClick="clear_canvas()" class="clear"><i class="fa fa-trash"></i></button>
+                <span class="tooltiptxt tooltiptxt-clear">Clear</span>
+             </div>
         </div>
     </div>
 </body>

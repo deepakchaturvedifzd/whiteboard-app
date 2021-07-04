@@ -29,6 +29,7 @@ function start(event){
     is_drawing =true;
     context.beginPath();
     context.moveTo(event.clientX - canvas.offsetLeft,event.clientY - canvas.offsetTop);
+    draw(event);
     event.preventDefault();
 }
 
@@ -41,10 +42,6 @@ function draw(event){
     context.lineJoin = "round";
     context.stroke();
 
-    if(is_erasing=true)
-    {
-        is_erasing=false;
-    }
     }
     
     event.preventDefault();
@@ -72,6 +69,17 @@ function change_color_bg(element)
     start_background_color=element.style.background;
     context.fillStyle=start_background_color;
     context.fillRect(0,0,canvas.width,canvas.height);
+
+    if(!is_erasing)
+    {
+        is_erasing=true;
+        draw_color=start_background_color;
+    }
+    if(is_erasing)
+    {
+        is_erasing=false;
+        draw_color=last_color;
+    }
     // context.putImageData(restore_array[index],0,0);
 }
 function clear_canvas()
@@ -99,6 +107,7 @@ function undo_last()
 }
 function erase()
 {
+    canvas.classList.toggle("erasing");
     if(!is_erasing)
     {
     last_color=draw_color;
@@ -107,8 +116,8 @@ function erase()
     is_erasing=true;
     }
     else{
+        is_erasing=false;
         draw_color=last_color;
-
     }
 
 }
