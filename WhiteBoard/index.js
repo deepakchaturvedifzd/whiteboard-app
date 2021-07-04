@@ -1,5 +1,7 @@
 const canvas = document.getElementById("canvas");
 const range=document.querySelector(".pen-range");
+const txtBtn = document.querySelector(".add-txt");
+const txtField = document.querySelector(".txt-field");
 canvas.width = window.innerWidth;// - 60;
 canvas.height = window.innerHeight;// - 150;
 
@@ -15,7 +17,9 @@ let restore_array = [];
 let index = -1;
 let is_erasing = false;
 let is_drawing_shapes=false
+let is_adding_text=false;
 let last_color;
+let txtcolor;
 
 window.addEventListener('resize',(()=>{
 canvas.width = window.innerWidth;// - 60;
@@ -35,6 +39,8 @@ canvas.addEventListener("mouseup", stop, false);
 canvas.addEventListener("mouseout", stop, false);
 
 canvas.addEventListener('mousedown',circle,false);
+canvas.addEventListener('mousedown',addText,false);
+
 canvas.classList.add("drawing");
 
 document.addEventListener("keydown", function (event) {
@@ -50,7 +56,11 @@ function start(event) {
     event.clientX - canvas.offsetLeft,
     event.clientY - canvas.offsetTop
   );
+  if(!is_adding_text)
+  {
   draw(event);
+  }
+
   event.preventDefault();
 }
 
@@ -107,6 +117,7 @@ function change_color_bg(element) {
   }
   // context.putImageData(restore_array[index],0,0);
 }
+
 function clear_canvas() {
   context.fillStyle = start_background_color;
   context.clearRect(0, 0, canvas.width, canvas.height);
@@ -115,19 +126,20 @@ function clear_canvas() {
   restore_array = [];
   index = -1;
 }
+  
 
 function undo_last() {
-  if (index <= 0) {
-    clear_canvas();
+  if (index <=0) {
+     clear_canvas();
     if (!is_erasing) {
       is_erasing = true;
       canvas.classList.add("erasing");
-      draw_color = start_background_color;
+      // draw_color = start_background_color;
     }
     if (is_erasing) {
       is_erasing = false;
       canvas.classList.remove("erasing");
-      draw_color = last_color;
+      // draw_color = last_color;
     }
   } else {
     if (!is_erasing) {
@@ -161,6 +173,7 @@ function erase() {
 
 function is_shapes()
 {
+    
     if(is_drawing_shapes)
     {
       is_drawing_shapes=false;
@@ -183,13 +196,99 @@ function circle(event)
     // context.strokeStyle = '#003300';
     // context.stroke();
 
-    // context.beginPath();
-    // context.rect(event.clientX, event.clientY, 150, 100);
-    // context.stroke();
+    context.beginPath();
+    context.rect(event.clientX, event.clientY, 150, 100);
+    context.stroke();
 
     //test
 
   }
 
 }
+
+function is_text(event)
+{
+  
+    if(is_adding_text)
+    {
+      is_adding_text=false;
+      if(canvas.classList.contains("typing")){
+        canvas.classList.remove("typing");
+      }
+    }
+    else{
+      is_adding_text=true;
+      canvas.classList.add("typing");
+    }
+    console.log(is_adding_text);
+
+}
+
+
+function addText(event)
+{
+  if(is_adding_text)
+  {
+    console.log(is_adding_text);
+    font = '40px sans-serif',
+    hasInput = false;
+
+    canvas.onclick = function(e) {
+    if (hasInput) return;
+    addInput(e.clientX, e.clientY);
+}
+
+if(is_adding_text){
+function addInput(x, y) {
+  if(is_adding_text)
+  {
+
+    var input = document.createElement('input');
+
+    input.type = 'text';
+    input.style.position = 'fixed';
+    input.style.left = (x - 4) + 'px';
+    input.style.top = (y - 4) + 'px';
+    input.style.fontSize="30px";
+    input.style.height="40px";
+
+    input.onkeydown = handleEnter;
+
+    document.body.appendChild(input);
+
+    input.focus();
+
+    hasInput = true;
+  }
+}
+}
+//Function to dynamically add an input box: 
+
+
+//Key handler for input box:
+function handleEnter(e) {
+    var keyCode = e.keyCode;
+    if (keyCode === 13) {
+        drawText(this.value, parseInt(this.style.left, 10), parseInt(this.style.top, 10));
+        document.body.removeChild(this);
+        hasInput = false;
+        is_adding_text=false;
+        if(canvas.classList.contains("typing")){
+        canvas.classList.remove("typing");
+        }
+    }
+}
+
+//Draw the text onto canvas:
+function drawText(txt, x, y) {
+    context.textBaseline = 'top';
+    context.textAlign = 'left';
+    context.font = font;
+    txtcolor=draw_color;
+    context.fillStyle=draw_color;
+    context.fillText(txt, x - 4, y - 4);
+}
+  }
+}
+
 

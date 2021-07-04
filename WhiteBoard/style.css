@@ -9,6 +9,7 @@ body {
   width: 100vw;
   margin: 0;
   /* padding: 30px; */
+
   font-family: Poppins;
   overflow: hidden;
   background: rgb(68, 68, 68);
@@ -36,16 +37,21 @@ canvas {
   justify-content: center;
   flex-direction: row;
   z-index: 2;
-  background: rgb(117, 117, 117);
+  background: rgba(255, 255, 255, 0.76);
   left: 50%;
   transform: translate(-50%, 0);
-  box-shadow: -3px 2px 9px 6px black;
+  box-shadow: -3px 1px 4px 3px rgb(87, 87, 87);
 }
 .bg-colors {
   width: 17%;
   display: flex;
   justify-content: space-around;
   padding: 0.6% 0%;
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  border-radius: 10px;
   /* background-color: yellow; */
 }
 .tools .color-field {
@@ -53,9 +59,10 @@ canvas {
   width: 12%;
   cursor: pointer;
   /* display: inline-block; */
+
   box-sizing: border-box;
   border-radius: 50%;
-  border: 3px solid white;
+  border: 3px solid rgba(0, 0, 0, 0.479);
   align-self: center;
 }
 
@@ -71,13 +78,14 @@ canvas {
   align-self: center;
   height: 80%;
   width: 200%;
-  border: 2px solid white;
+  border: 2px solid black;
   cursor: pointer;
-  color: white;
-  background: #222;
+  color: black;
+  background: white;
   font-weight: bold;
   font-size: 2rem;
   margin: 25% 0%;
+  z-index: 4;
 }
 
 .picker {
@@ -86,6 +94,7 @@ canvas {
   display: flex;
   justify-content: left;
   /* background-color: yellow; */
+
   margin: 0% 0%;
   padding: 0.3% 0%;
   z-index: 2;
@@ -99,6 +108,7 @@ canvas {
   height: 200%;
   z-index: 2;
 }
+
 .picker i {
   position: absolute;
   color: white;
@@ -119,6 +129,7 @@ canvas {
   border-radius: 6px;
   padding: 0% 0.5%;
   /* Position the tooltip text - see examples below! */
+
   position: absolute;
   z-index: 1;
 }
@@ -134,7 +145,7 @@ canvas {
 }
 .tooltiptxt-bgcolors {
   margin-left: 1%;
-  margin-top: -2.3%;
+  margin-top: -15.3%;
   visibility: hidden;
   color: yellow;
 }
@@ -161,6 +172,7 @@ canvas {
   color: yellow;
   visibility: hidden;
 }
+
 .color-picker:hover {
   cursor: pointer;
 }
@@ -200,12 +212,14 @@ canvas {
 .erasing {
   cursor: url("eraserpng.png") 0 24, default;
 }
-
+.typing {
+  cursor: url("txtBox.png") 30 30, default;
+}
 .pen-range {
   -webkit-appearance: none;
   width: 12%;
   height: 20%;
-  background: #ffffff;
+  background: #8d8d8d;
   outline: none;
   opacity: 0.8;
   -webkit-transition: 0.2s;
@@ -221,8 +235,8 @@ canvas {
   appearance: none;
   width: 12%;
   height: 20px;
-  background: #646464;
-  border: 3px solid white;
+  background: #ffffff;
+  border: 3px solid rgb(0, 0, 0);
   border-radius: 25%;
   cursor: pointer;
 }
@@ -232,4 +246,7 @@ canvas {
   height: 25px;
   background: #04aa6d;
   cursor: pointer;
+}
+i {
+  pointer-events: none;
 }

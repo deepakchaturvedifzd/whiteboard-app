@@ -19,10 +19,7 @@
       crossorigin="anonymous"
     />
     <div class="field">
-      <canvas id="canvas" href="#" width="window.innerWidth" height="window.innerHeight"> </canvas>
-              <div id="output">
-              
-              </div>
+      <canvas id="canvas" href="#" width="window.innerWidth" height="window.innerHeight"></canvas>
       <div class="tools">
 
         <div class="picker">
@@ -67,7 +64,7 @@
           <div
             onclick="change_color_bg(this)"
             class="color-field color4"
-            style="background: rgb(154, 256, 154)"
+            style="background:rgb(150, 146, 146)"
           ></div>
           <span class="tooltiptxt-bgcolors tooltiptxt">New Background</span>
         </div>
@@ -80,15 +77,15 @@
             <span class="tooltiptxt-eraser tooltiptxt">Click to erase !</span>
           </div>
 
-          <div class="shape">
+          <div class="shape" onclick="is_shapes()">
             <button class="shape-btn" onclick="is_shapes()">
               <i class="fas fa-shapes" style="font-size: 25px;"></i>
             </button>
             <span class="tooltiptxt-shape tooltiptxt">Click to add shape</span>
           </div>
 
-          <div class="text">
-            <button class="add-txt"><i class="fas fa-font" style="font-size: 25px;"></i></button>
+          <div class="text" onclick="is_text()">
+            <button class="add-txt"><i class="fas fa-font" onclick="is_text()" style="font-size: 25px;"></i></button>
             <span class="tooltiptxt-text tooltiptxt">Click to add text</span>
           </div>
 
@@ -106,8 +103,6 @@
             <span class="tooltiptxt tooltiptxt-clear">Clear</span>
           </div>
         </div>
-
-       
       </div>
     </div>
   </body>
