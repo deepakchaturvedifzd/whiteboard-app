@@ -16,10 +16,12 @@ let is_drawing = false;
 let restore_array = [];
 let index = -1;
 let is_erasing = false;
-let is_drawing_shapes=false
+let is_drawing_rect=false
+let is_drawing_circle=false;
 let is_adding_text=false;
 let last_color;
 let txtcolor;
+var imageData;
 
 window.addEventListener('resize',(()=>{
 canvas.width = window.innerWidth;// - 60;
@@ -38,14 +40,22 @@ canvas.addEventListener("touchend", stop, false);
 canvas.addEventListener("mouseup", stop, false);
 canvas.addEventListener("mouseout", stop, false);
 
-canvas.addEventListener('mousedown',circle,false);
+ canvas.addEventListener('mousedown',rect,false);
+//  canvas.addEventListener('mousedown',circle,false);
 canvas.addEventListener('mousedown',addText,false);
+
+
 
 canvas.classList.add("drawing");
 
 document.addEventListener("keydown", function (event) {
   if (event.ctrlKey && event.key === "z") {
     undo_last();
+  }
+
+  if(event.ctrlKey && event.key==="s")
+  {
+    save();
   }
 });
 
@@ -171,40 +181,225 @@ function erase() {
   }
 }
 
-function is_shapes()
+function is_rect(event)
 {
     
-    if(is_drawing_shapes)
+    if(is_drawing_rect)
     {
-      is_drawing_shapes=false;
+      rect(event);
+      is_drawing_rect=false;
     }
     else{
-      is_drawing_shapes=true;
+      is_drawing_rect=true;
     }
 
     console.log(range.value)
 }
-function circle(event)
+function rect(event)
 {
 
-  if(is_drawing_shapes)
+  if(is_drawing_rect)
   {
-    // var radius = 10;
-    // context.beginPath();
-    // context.arc(event.clientX, event.clientY, radius*range.value, 0, 2 * Math.PI, false);
-    // context.lineWidth = 5;
-    // context.strokeStyle = '#003300';
-    // context.stroke();
-
-    context.beginPath();
-    context.rect(event.clientX, event.clientY, 150, 100);
-    context.stroke();
 
     //test
+    context.strokeStyle = "blue";
+    context.lineWidth = 2;
 
-  }
+    // calculate where the canvas is on the window
+    // (used to help calculate mouseX/mouseY)
+    var canvasOffset = canvas.getBoundingClientRect();
+    var offsetX = canvasOffset.left;
+    var offsetY = canvasOffset.top;
+
+    // this flage is true when the user is dragging the mouse
+    var isDown = false;
+
+    // these vars will hold the starting mouse position
+    var startX;
+    var startY;
+
+function handleMouseDown(e) {
+    console.log('handleMouseDown')
+    console.log(e)
+    e.preventDefault();
+    e.stopPropagation();
+
+    // save the starting x/y of the rectangle
+    startX = parseInt(e.clientX - offsetX);
+    startY = parseInt(e.clientY - offsetY);
+
+    // set a flag indicating the drag has begun
+    isDown = true;
+}
+
+function handleMouseUp(e) {
+    console.log('handleMouseUp')
+    console.log(e)
+    e.preventDefault();
+    e.stopPropagation();
+
+    // the drag is over, clear the dragging flag
+    isDown = false;
+    // console.log(x1, x2, y1, y2)
+}
+
+function handleMouseOut(e) {
+    console.log('handleMouseOut')
+    console.log(e)
+    e.preventDefault();
+    e.stopPropagation();
+
+    // the drag is over, clear the dragging flag
+    isDown = false; 
+}
+
+function handleMouseMove(e) {
+    console.log('handleMouseMove')
+    console.log(e)
+    e.preventDefault();
+    e.stopPropagation();
+
+    // if we're not dragging, just return
+    if (!isDown) {
+        return;
+    }
+
+    // get the current mouse position
+    mouseX = parseInt(e.clientX - offsetX);
+    mouseY = parseInt(e.clientY - offsetY);
+
+    // Put your mousemove stuff here
+
+    // clear the canvas
+    // context.clearRect(startX, startY, mouseX-offsetX, mouseY-offsetY);
+
+    // calculate the rectangle width/height based
+    // on starting vs current mouse position
+    var width = mouseX - startX;
+    var height = mouseY - startY;
+
+    // draw a new rect from the start position 
+    // to the current mouse position
+    context.fillRect(startX, startY, width, height);
+    context.fillStyle = start_background_color;
+    context.strokeRect(startX, startY, width, height);
+    context.strokeStyle=draw_color;
+    x1 = startX
+    y1 = startY
+    x2 = width
+    y2 = height
 
 }
+
+      
+
+  }
+  document.getElementById('canvas').addEventListener('mousedown', function(e) {
+        handleMouseDown(e);
+      });
+      document.getElementById('canvas').addEventListener('mousemove', function(e) {
+        handleMouseMove(e);
+      });
+      document.getElementById('canvas').addEventListener('mouseup', function(e) {
+        handleMouseUp(e);
+      });
+      document.getElementById('canvas').addEventListener('mouseout', function(e) {
+        handleMouseOut(e);
+      });
+
+}
+// function is_circle(event)
+// {
+    
+//     if(is_drawing_circle)
+//     {
+//       // circle(event);
+//       is_drawing_circle=false;
+//     }
+//     else{
+//       is_drawing_circle=true;
+//       circle(event);
+//     }
+
+//     console.log("circle")
+// }
+
+// function circle(event){
+//   if(is_drawing_circle)
+//   {
+//     var canvasOffset = canvas.getBoundingClientRect();
+//     var offsetX = canvasOffset.left;
+//     var offsetY = canvasOffset.top;
+//     var startX;
+//     var startY;
+//     var isDown = false;
+
+// function drawOval(x, y) {
+//     // context.clearRect(0, 0, canvas.width, canvas.height);
+//     context.fillStyle='green';
+//     context.beginPath();
+//     context.moveTo(startX, startY + (y - startY) / 2);
+//     context.bezierCurveTo(startX, startY, x, startY, x, startY + (y - startY) / 2);
+//     context.bezierCurveTo(x, y, startX, y, startX, startY + (y - startY) / 2);
+//     context.closePath();
+    
+//     context.stroke();
+    
+// }
+
+// function handleMouseDownC(e) {
+//     e.preventDefault();
+//     e.stopPropagation();
+//     startX = parseInt(e.clientX - offsetX);
+//     startY = parseInt(e.clientY - offsetY);
+//     isDown = true;
+// }
+
+// function handleMouseUpC(e) {
+//     if (!isDown) {
+//         return;
+//     }
+//     e.preventDefault();
+//     e.stopPropagation();
+//     isDown = false;
+// }
+
+// function handleMouseOutC(e) {
+//     if (!isDown) {
+//         return;
+//     }
+//     e.preventDefault();
+//     e.stopPropagation();
+//     isDown = false;
+// }
+
+// function handleMouseMoveC(e) {
+//     if (!isDown) {
+//         return;
+//     }
+//     e.preventDefault();
+//     e.stopPropagation();
+//     mouseX = parseInt(e.clientX - offsetX);
+//     mouseY = parseInt(e.clientY - offsetY);
+//     drawOval(mouseX, mouseY);
+// }
+
+//   }
+
+//   document.getElementById('canvas').addEventListener('mousedown', function(e) {
+//         handleMouseDownC(e);
+//       });
+//       document.getElementById('canvas').addEventListener('mousemove', function(e) {
+//         handleMouseMoveC(e);
+//       });
+//       document.getElementById('canvas').addEventListener('mouseup', function(e) {
+//         handleMouseUpC(e);
+//       });
+//       document.getElementById('canvas').addEventListener('mouseout', function(e) {
+//         handleMouseOutC(e);
+//       });
+// }
+      
 
 function is_text(event)
 {
@@ -249,6 +444,7 @@ function addInput(x, y) {
     input.style.position = 'fixed';
     input.style.left = (x - 4) + 'px';
     input.style.top = (y - 4) + 'px';
+    input.placeholder="Type + Press Enter";
     input.style.fontSize="30px";
     input.style.height="40px";
 
@@ -290,5 +486,23 @@ function drawText(txt, x, y) {
 }
   }
 }
+
+// save
+
+function save()
+{
+  localStorage.setItem(canvas, canvas.toDataURL());
+}
+function load()
+{
+   var dataURL = localStorage.getItem(canvas);
+   var img = new Image;
+   img.src = dataURL;
+   img.onload = function () {
+   context.drawImage(img, 0, 0);
+};
+}
+load();
+
 
 

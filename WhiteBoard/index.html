@@ -19,6 +19,10 @@
       crossorigin="anonymous"
     />
     <div class="field">
+      <div class="save-container">
+        <button class="save" onclick="save()"></button>
+        <span class="tooltiptxt tooltiptxt-save">Click to save</span>
+      </div>
       <canvas id="canvas" href="#" width="window.innerWidth" height="window.innerHeight"></canvas>
       <div class="tools">
 
@@ -77,12 +81,19 @@
             <span class="tooltiptxt-eraser tooltiptxt">Click to erase !</span>
           </div>
 
-          <div class="shape" onclick="is_shapes()">
-            <button class="shape-btn" onclick="is_shapes()">
-              <i class="fas fa-shapes" style="font-size: 25px;"></i>
+          <div class="shape" onclick="is_rect()">
+            <button class="shape-btn" onclick="is_rect()">
+              <i class="fas fa-square" style="font-size: 25px;"></i>
             </button>
-            <span class="tooltiptxt-shape tooltiptxt">Click to add shape</span>
+            <span class="tooltiptxt-shape tooltiptxt">Click to add rect</span>
           </div>
+<!-- 
+          <div class="shape1" onclick="is_circle()">
+            <button class="shape-btn" onclick="is_circle()">
+              <i class="fas fa-circle" style="font-size: 25px;"></i>
+            </button>
+            <span class="tooltiptxt-shape tooltiptxt">Click to add circle</span>
+          </div> -->
 
           <div class="text" onclick="is_text()">
             <button class="add-txt"><i class="fas fa-font" onclick="is_text()" style="font-size: 25px;"></i></button>
