@@ -1,6 +1,7 @@
 //slider
 const sliderValue = document.getElementById("new");
 const inputSlider = document.getElementById("nice");
+const colorPicker = document.querySelector(".color-picker");
 var draw_width=2;
 inputSlider.oninput = (() =>{
   let value = inputSlider.value;
@@ -206,6 +207,7 @@ function is_rect(event)
       is_drawing_rect=false;
     }
     else{
+
       is_drawing_rect=true;
     }
 
@@ -216,7 +218,7 @@ function rect(event)
 
   if(is_drawing_rect)
   {
-
+    is_drawing=false;
     //test
     context.strokeStyle = "blue";
     context.lineWidth = 2;
@@ -296,10 +298,12 @@ function handleMouseMove(e) {
 
     // draw a new rect from the start position 
     // to the current mouse position
+    is_drawing=false;
     context.fillRect(startX, startY, width, height);
     context.fillStyle = start_background_color;
     context.strokeRect(startX, startY, width, height);
-    context.strokeStyle=draw_color;
+    context.strokeStyle = draw_color;
+
     x1 = startX
     y1 = startY
     x2 = width
@@ -440,6 +444,7 @@ function addText(event)
 {
   if(is_adding_text)
   {
+    draw_color=colorPicker.value;
     console.log(is_adding_text);
     font = '40px sans-serif',
     hasInput = false;

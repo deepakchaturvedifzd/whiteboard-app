@@ -183,6 +183,18 @@ canvas {
   color: yellow;
   visibility: hidden;
 }
+.tooltiptxt-help {
+  margin-top: 100%;
+  margin-left: -130%;
+  width: 300%;
+  text-align: left;
+  padding-left: 10%;
+  color: white;
+  visibility: hidden;
+}
+.help:hover + .tooltiptxt-help {
+  visibility: visible;
+}
 .save:hover + .tooltiptxt-save {
   visibility: visible;
 }
@@ -229,88 +241,91 @@ canvas {
 .typing {
   cursor: url("txtBox.png") 30 30, default;
 }
+.makingrect {
+  cursor: crosshair;
+}
 .pen-range::-moz-range-thumb {
   width: 25px;
   height: 25px;
   background: #04aa6d;
   cursor: pointer;
 }
-.range{
+.range {
   height: 80px;
   width: 380px;
-  background:#fff;
+  background: #fff;
   border-radius: 10px;
   padding: 0 65px 0 45px;
 }
-.range .sliderValue{
-  position:relative;
-  width:100%;
+.range .sliderValue {
+  position: relative;
+  width: 100%;
 }
-.range .sliderValue span{
+.range .sliderValue span {
   position: absolute;
-  height:45px;
-  width:380px;
+  height: 10%;
+  width: 20%;
   color: white;
   font-weight: 500;
-  top: -40px;
+  top: -45px;
   transform: translateX(-50%) scale(0);
   transform-origin: bottom;
   transition: transform 0.3s ease-in-out;
   line-height: 55px;
   z-index: 4;
 }
-.range .sliderValue span.show{
+.range .sliderValue span.show {
   transform: translateX(-50%) scale(1);
 }
-.range .sliderValue span:after{
+.range .sliderValue span:after {
   position: absolute;
   content: "";
-  height:45px;
-  width:45px;
+  height: 45px;
+  width: 45px;
   background: gray;
-  left:50%;
+  left: 50%;
   transform: translateX(-50%) rotate(45deg);
-  border:solid 3px #fff;
+  border: solid 3px #fff;
   z-index: -1;
   border-top-left-radius: 50%;
   border-top-right-radius: 50%;
   border-bottom-left-radius: 50%;
 }
-.range .fieeld{
-  position:relative;
-  display:flex;
+.range .fieeld {
+  position: relative;
+  display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
 }
-.range .fieeld .value{
-  position:absolute;
-  font-size:18px;
-  font-weight:600;
+.range .fieeld .value {
+  position: absolute;
+  font-size: 18px;
+  font-weight: 600;
   color: black;
 }
-.range .fieeld .value.left{
+.range .fieeld .value.left {
   left: -22px;
 }
-.range .fieeld .value.right{
+.range .fieeld .value.right {
   right: -43px;
 }
-.range .fieeld input{
+.range .fieeld input {
   -webkit-appearance: none;
-  height:3px;
-  background:#ddd;
+  height: 3px;
+  background: #ddd;
   border-radius: 5px;
-  outline:none;
-  border:none;
-  width:100%;
+  outline: none;
+  border: none;
+  width: 100%;
 }
-.range .fieeld input::-webkit-slider-thumb{
+.range .fieeld input::-webkit-slider-thumb {
   -webkit-appearance: none;
   height: 20px;
   width: 20px;
   background: black;
   border-radius: 50%;
-  border: 1px solid #664AFF;
+  border: 1px solid #664aff;
   cursor: pointer;
 }
 i {
@@ -323,6 +338,24 @@ i {
   top: 1%;
   right: 2%;
   z-index: 5;
+}
+.help-container {
+  width: 4%;
+  height: 8%;
+  position: fixed;
+  top: 1%;
+  left: 2%;
+  z-index: 5;
+}
+.help {
+  height: 100%;
+  width: 100%;
+  background-image: url("help.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  cursor: pointer;
+  border: none;
+  background-color: white;
 }
 .save {
   height: 100%;

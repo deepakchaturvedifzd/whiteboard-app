@@ -21,7 +21,16 @@
     <div class="field">
       <div class="save-container">
         <button class="save" onclick="save()"></button>
-        <span class="tooltiptxt tooltiptxt-save">Click to save</span>
+        <span class="tooltiptxt tooltiptxt-save">Saves in localStorage</span>
+      </div>
+
+      <div class="help-container">
+        <button class="help"></button>
+        <span class="tooltiptxt tooltiptxt-help">Functions : <br> 1. Save button saves the canvas in your local storage.<br>
+        2. Rect Tool : creates rectangle of selected color<br>
+      3. Slider : select the stroke width of both Pen and Eraser<br>
+    4. Color Picker : Selects the draw color of pen and shapes too<br>
+  5. Undo : CTRL + Z</span>
       </div>
       <canvas id="canvas" href="#" width="window.innerWidth" height="window.innerHeight"></canvas>
       <div class="tools">
