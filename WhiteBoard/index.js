@@ -96,9 +96,9 @@ function draw(event) {
     if (!canvas.classList.contains("drawing")) {
       canvas.classList.add("drawing");
     }
-    if(canvas.classList.contains("makingrect")){
-      canvas.classList.remove("makingrect");
-    }
+    // if(canvas.classList.contains("makingrect")){
+    //   canvas.classList.remove("makingrect");
+    // }
     context.lineTo(
       event.clientX - canvas.offsetLeft,
       event.clientY - canvas.offsetTop
@@ -139,9 +139,9 @@ function change_color_bg(element) {
     canvas.classList.add("erasing");
     last_color = draw_color;
     draw_color = start_background_color;
-    if(canvas.classList.contains("makingrect")){
-      canvas.classList.remove("makingrect");
-    }
+    // if(canvas.classList.contains("makingrect")){
+    //   canvas.classList.remove("makingrect");
+    // }
   }
   if (is_erasing) {
     is_erasing = false;
@@ -197,9 +197,9 @@ function erase() {
 
     is_erasing = true;
     canvas.classList.add("erasing");
-    if(canvas.classList.contains("makingrect")){
-      canvas.classList.remove("makingrect");
-    }
+    // if(canvas.classList.contains("makingrect")){
+    //   canvas.classList.remove("makingrect");
+    // }
   } else {
     is_erasing = false;
     canvas.classList.remove("erasing");
@@ -216,9 +216,9 @@ function is_rect(event)
       is_drawing_rect=false;
     }
     else{
-      if(canvas.classList.contains("makingrect")){
-        canvas.classList.remove("makingrect");
-      }
+      // if(canvas.classList.contains("makingrect")){
+      //   canvas.classList.remove("makingrect");
+      // }
       is_drawing_rect=true;
     }
 
@@ -230,7 +230,7 @@ function rect(event)
   if(is_drawing_rect)
   {
     is_drawing=false;
-    canvas.classList.add("makingrect");
+    // canvas.classList.add("makingrect");
     //test
     context.strokeStyle = "blue";
     context.lineWidth = 2;
@@ -311,7 +311,7 @@ function handleMouseMove(e) {
     // draw a new rect from the start position 
     // to the current mouse position
     is_drawing=false;
-    canvas.classList.add("makingrect")
+    // canvas.classList.add("makingrect")
     context.fillRect(startX, startY, width, height);
     context.fillStyle = start_background_color;
     context.strokeRect(startX, startY, width, height);
