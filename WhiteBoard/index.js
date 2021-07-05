@@ -219,6 +219,7 @@ function rect(event)
   if(is_drawing_rect)
   {
     is_drawing=false;
+    canvas.classList.add("makingrect");
     //test
     context.strokeStyle = "blue";
     context.lineWidth = 2;
@@ -299,6 +300,7 @@ function handleMouseMove(e) {
     // draw a new rect from the start position 
     // to the current mouse position
     is_drawing=false;
+    canvas.classList.add("makingrect")
     context.fillRect(startX, startY, width, height);
     context.fillStyle = start_background_color;
     context.strokeRect(startX, startY, width, height);
@@ -308,11 +310,13 @@ function handleMouseMove(e) {
     y1 = startY
     x2 = width
     y2 = height
-
 }
 
       
 
+  }
+  if(!is_drawing_rect){
+    canvas.classList.remove("makingrect");
   }
   document.getElementById('canvas').addEventListener('mousedown', function(e) {
         handleMouseDown(e);
