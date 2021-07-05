@@ -2,26 +2,26 @@
 const sliderValue = document.getElementById("new");
 const inputSlider = document.getElementById("nice");
 const colorPicker = document.querySelector(".color-picker");
-var draw_width=2;
-inputSlider.oninput = (() =>{
+var draw_width = 2;
+inputSlider.oninput = () => {
   let value = inputSlider.value;
   sliderValue.textContent = value;
-  sliderValue.style.left = (2*value) + "%";
+  sliderValue.style.left = 2 * value + "%";
   sliderValue.classList.add("show");
-  draw_width=value;
-})
-inputSlider.onblur = (()=>{
+  draw_width = value;
+};
+inputSlider.onblur = () => {
   sliderValue.classList.remove("show");
   console.log(inputSlider);
   console.log(sliderValue);
-});
+};
 
 const canvas = document.getElementById("canvas");
-const range=document.querySelector(".pen-range");
+const range = document.querySelector(".pen-range");
 const txtBtn = document.querySelector(".add-txt");
 const txtField = document.querySelector(".txt-field");
-canvas.width = window.innerWidth;// - 60;
-canvas.height = window.innerHeight;// - 150;
+canvas.width = window.innerWidth; // - 60;
+canvas.height = window.innerHeight; // - 150;
 
 let context = canvas.getContext("2d");
 let start_background_color = "white";
@@ -33,20 +33,20 @@ let is_drawing = false;
 let restore_array = [];
 let index = -1;
 let is_erasing = false;
-let is_drawing_rect=false
-let is_drawing_circle=false;
-let is_adding_text=false;
+let is_drawing_rect = false;
+let is_drawing_circle = false;
+let is_adding_text = false;
 let last_color;
 let txtcolor;
 var imageData;
 
-window.addEventListener('resize',(()=>{
-canvas.width = window.innerWidth;// - 60;
-canvas.height = window.innerHeight;
-context = canvas.getContext("2d");
-context.fillStyle = start_background_color;
-context.fillRect(0, 0, canvas.width, canvas.height);
-}));
+window.addEventListener("resize", () => {
+  canvas.width = window.innerWidth; // - 60;
+  canvas.height = window.innerHeight;
+  context = canvas.getContext("2d");
+  context.fillStyle = start_background_color;
+  context.fillRect(0, 0, canvas.width, canvas.height);
+});
 
 canvas.addEventListener("touchstart", start, false);
 canvas.addEventListener("touchmove", draw, false);
@@ -57,12 +57,9 @@ canvas.addEventListener("touchend", stop, false);
 canvas.addEventListener("mouseup", stop, false);
 canvas.addEventListener("mouseout", stop, false);
 
- canvas.addEventListener('mousedown',rect,false);
+// canvas.addEventListener("mousedown", rect, false);
 //  canvas.addEventListener('mousedown',circle,false);
-canvas.addEventListener('mousedown',addText,false);
-
-
-
+canvas.addEventListener("mousedown", addText, false);
 canvas.classList.add("drawing");
 
 document.addEventListener("keydown", function (event) {
@@ -70,8 +67,7 @@ document.addEventListener("keydown", function (event) {
     undo_last();
   }
 
-  if(event.ctrlKey && event.key==="s")
-  {
+  if (event.ctrlKey && event.key === "s") {
     save();
   }
 });
@@ -83,9 +79,8 @@ function start(event) {
     event.clientX - canvas.offsetLeft,
     event.clientY - canvas.offsetTop
   );
-  if(!is_adding_text)
-  {
-  draw(event);
+  if (!is_adding_text) {
+    draw(event);
   }
 
   event.preventDefault();
@@ -159,11 +154,10 @@ function clear_canvas() {
   restore_array = [];
   index = -1;
 }
-  
 
 function undo_last() {
-  if (index <=0) {
-     clear_canvas();
+  if (index <= 0) {
+    clear_canvas();
     if (!is_erasing) {
       is_erasing = true;
       canvas.classList.add("erasing");
@@ -206,51 +200,44 @@ function erase() {
     draw_color = last_color;
   }
 }
-
-function is_rect(event)
-{
-    
-    if(is_drawing_rect)
-    {
-      rect(event);
-      is_drawing_rect=false;
+var opBool = true;
+function is_rect(event) {
+  console.log(is_drawing_rect);
+  if (is_drawing_rect) {
+    is_drawing_rect = false;
+  } else if (!is_drawing_rect) {
+    is_drawing_rect = true;
+    if (is_drawing_rect) {
+      canvas.addEventListener("mousedown", handleMouseDown, false);
+      canvas.addEventListener("mousemove", handleMouseMove, false);
+      canvas.addEventListener("mouseout", handleMouseOut, false);
+      canvas.addEventListener("mouseup", handleMouseUp, false);
     }
-    else{
-      // if(canvas.classList.contains("makingrect")){
-      //   canvas.classList.remove("makingrect");
-      // }
-      is_drawing_rect=true;
-    }
+  }
+  opBool = is_drawing_rect;
 
-    console.log(range.value)
+  console.log("-----" + opBool);
 }
-function rect(event)
-{
 
-  if(is_drawing_rect)
-  {
-    is_drawing=false;
-    // canvas.classList.add("makingrect");
-    //test
-    context.strokeStyle = "blue";
-    context.lineWidth = 2;
+context.strokeStyle = "blue";
+context.lineWidth = 2;
 
-    // calculate where the canvas is on the window
-    // (used to help calculate mouseX/mouseY)
-    var canvasOffset = canvas.getBoundingClientRect();
-    var offsetX = canvasOffset.left;
-    var offsetY = canvasOffset.top;
+// calculate where the canvas is on the window
+// (used to help calculate mouseX/mouseY)
+var canvasOffset = canvas.getBoundingClientRect();
+var offsetX = canvasOffset.left;
+var offsetY = canvasOffset.top;
 
-    // this flage is true when the user is dragging the mouse
-    var isDown = false;
+// this flage is true when the user is dragging the mouse
+var isDown = false;
 
-    // these vars will hold the starting mouse position
-    var startX;
-    var startY;
-
+// these vars will hold the starting mouse position
+var startX;
+var startY;
 function handleMouseDown(e) {
-    console.log('handleMouseDown')
-    console.log(e)
+  if (opBool) {
+    console.log("handleMouseDown");
+
     e.preventDefault();
     e.stopPropagation();
 
@@ -260,38 +247,44 @@ function handleMouseDown(e) {
 
     // set a flag indicating the drag has begun
     isDown = true;
+  }
 }
-
+console.log("+++" + opBool);
 function handleMouseUp(e) {
-    console.log('handleMouseUp')
-    console.log(e)
+  if (opBool) {
+    console.log("handleMouseUp");
+
     e.preventDefault();
     e.stopPropagation();
 
     // the drag is over, clear the dragging flag
     isDown = false;
     // console.log(x1, x2, y1, y2)
+  }
 }
 
 function handleMouseOut(e) {
-    console.log('handleMouseOut')
-    console.log(e)
+  if (opBool) {
+    console.log("handleMouseOut");
+
     e.preventDefault();
     e.stopPropagation();
 
     // the drag is over, clear the dragging flag
-    isDown = false; 
+    isDown = false;
+  }
 }
 
 function handleMouseMove(e) {
-    console.log('handleMouseMove')
-    console.log(e)
+  if (opBool) {
+    console.log("handleMouseMove");
+
     e.preventDefault();
     e.stopPropagation();
 
     // if we're not dragging, just return
     if (!isDown) {
-        return;
+      return;
     }
 
     // get the current mouse position
@@ -308,42 +301,41 @@ function handleMouseMove(e) {
     var width = mouseX - startX;
     var height = mouseY - startY;
 
-    // draw a new rect from the start position 
+    // draw a new rect from the start position
     // to the current mouse position
-    is_drawing=false;
+    is_drawing = false;
     // canvas.classList.add("makingrect")
     context.fillRect(startX, startY, width, height);
     context.fillStyle = start_background_color;
     context.strokeRect(startX, startY, width, height);
     context.strokeStyle = draw_color;
 
-    x1 = startX
-    y1 = startY
-    x2 = width
-    y2 = height
-}
-
-      
-
+    x1 = startX;
+    y1 = startY;
+    x2 = width;
+    y2 = height;
   }
-  
-  document.getElementById('canvas').addEventListener('mousedown', function(e) {
-        handleMouseDown(e);
-      });
-      document.getElementById('canvas').addEventListener('mousemove', function(e) {
-        handleMouseMove(e);
-      });
-      document.getElementById('canvas').addEventListener('mouseup', function(e) {
-        handleMouseUp(e);
-      });
-      document.getElementById('canvas').addEventListener('mouseout', function(e) {
-        handleMouseOut(e);
-      });
-
 }
+
+//
+// console.log(opBool);
+// document.getElementById("canvas").addEventListener("mousedown", function (e) {
+//   console.log(opBool);
+//   handleMouseDown(e, opBool);
+// });
+// document.getElementById("canvas").addEventListener("mousemove", function (e) {
+//   handleMouseMove(e, opBool);
+// });
+// document.getElementById("canvas").addEventListener("mouseup", function (e) {
+//   handleMouseUp(e, opBool);
+// });
+// document.getElementById("canvas").addEventListener("mouseout", function (e) {
+//   handleMouseOut(e, opBool);
+// });
+
 // function is_circle(event)
 // {
-    
+
 //     if(is_drawing_circle)
 //     {
 //       // circle(event);
@@ -375,9 +367,9 @@ function handleMouseMove(e) {
 //     context.bezierCurveTo(startX, startY, x, startY, x, startY + (y - startY) / 2);
 //     context.bezierCurveTo(x, y, startX, y, startX, startY + (y - startY) / 2);
 //     context.closePath();
-    
+
 //     context.stroke();
-    
+
 // }
 
 // function handleMouseDownC(e) {
@@ -432,111 +424,97 @@ function handleMouseMove(e) {
 //         handleMouseOutC(e);
 //       });
 // }
-      
 
-function is_text(event)
-{
-  
-    if(is_adding_text)
-    {
-      is_adding_text=false;
-      if(canvas.classList.contains("typing")){
-        canvas.classList.remove("typing");
+function is_text(event) {
+  if (is_adding_text) {
+    is_adding_text = false;
+    if (canvas.classList.contains("typing")) {
+      canvas.classList.remove("typing");
+    }
+  } else {
+    is_adding_text = true;
+    canvas.classList.add("typing");
+  }
+  console.log(is_adding_text);
+}
+
+function addText(event) {
+  if (is_adding_text) {
+    draw_color = colorPicker.value;
+    console.log(is_adding_text);
+    (font = "40px sans-serif"), (hasInput = false);
+
+    canvas.onclick = function (e) {
+      if (hasInput) return;
+      addInput(e.clientX, e.clientY);
+    };
+
+    if (is_adding_text) {
+      function addInput(x, y) {
+        if (is_adding_text) {
+          var input = document.createElement("input");
+
+          input.type = "text";
+          input.style.position = "fixed";
+          input.style.left = x - 4 + "px";
+          input.style.top = y - 4 + "px";
+          input.placeholder = "Type + Press Enter";
+          input.style.fontSize = "30px";
+          input.style.height = "40px";
+
+          input.onkeydown = handleEnter;
+
+          document.body.appendChild(input);
+
+          input.focus();
+
+          hasInput = true;
+        }
       }
     }
-    else{
-      is_adding_text=true;
-      canvas.classList.add("typing");
-    }
-    console.log(is_adding_text);
+    //Function to dynamically add an input box:
 
-}
-
-
-function addText(event)
-{
-  if(is_adding_text)
-  {
-    draw_color=colorPicker.value;
-    console.log(is_adding_text);
-    font = '40px sans-serif',
-    hasInput = false;
-
-    canvas.onclick = function(e) {
-    if (hasInput) return;
-    addInput(e.clientX, e.clientY);
-}
-
-if(is_adding_text){
-function addInput(x, y) {
-  if(is_adding_text)
-  {
-
-    var input = document.createElement('input');
-
-    input.type = 'text';
-    input.style.position = 'fixed';
-    input.style.left = (x - 4) + 'px';
-    input.style.top = (y - 4) + 'px';
-    input.placeholder="Type + Press Enter";
-    input.style.fontSize="30px";
-    input.style.height="40px";
-
-    input.onkeydown = handleEnter;
-
-    document.body.appendChild(input);
-
-    input.focus();
-
-    hasInput = true;
-  }
-}
-}
-//Function to dynamically add an input box: 
-
-
-//Key handler for input box:
-function handleEnter(e) {
-    var keyCode = e.keyCode;
-    if (keyCode === 13) {
-        drawText(this.value, parseInt(this.style.left, 10), parseInt(this.style.top, 10));
+    //Key handler for input box:
+    function handleEnter(e) {
+      var keyCode = e.keyCode;
+      if (keyCode === 13) {
+        drawText(
+          this.value,
+          parseInt(this.style.left, 10),
+          parseInt(this.style.top, 10)
+        );
         document.body.removeChild(this);
         hasInput = false;
-        is_adding_text=false;
-        if(canvas.classList.contains("typing")){
-        canvas.classList.remove("typing");
+        is_adding_text = false;
+        if (canvas.classList.contains("typing")) {
+          canvas.classList.remove("typing");
         }
+      }
     }
-}
 
-//Draw the text onto canvas:
-function drawText(txt, x, y) {
-    context.textBaseline = 'top';
-    context.textAlign = 'left';
-    context.font = font;
-    txtcolor=draw_color;
-    context.fillStyle=draw_color;
-    context.fillText(txt, x - 4, y - 4);
-}
+    //Draw the text onto canvas:
+    function drawText(txt, x, y) {
+      context.textBaseline = "top";
+      context.textAlign = "left";
+      context.font = font;
+      txtcolor = draw_color;
+      context.fillStyle = draw_color;
+      context.fillText(txt, x - 4, y - 4);
+    }
   }
 }
 
 // save
 
-function save()
-{
+function save() {
   localStorage.setItem(canvas, canvas.toDataURL());
 }
-function load()
-{
-   var dataURL = localStorage.getItem(canvas);
-   var img = new Image;
-   img.src = dataURL;
-   img.onload = function () {
-   context.drawImage(img, 0, 0);
-};
+function load() {
+  var dataURL = localStorage.getItem(canvas);
+  var img = new Image();
+  img.src = dataURL;
+  img.onload = function () {
+    context.drawImage(img, 0, 0);
+  };
 }
 load();
-
-
-
