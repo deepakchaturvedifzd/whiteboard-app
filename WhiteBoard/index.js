@@ -1,3 +1,20 @@
+//slider
+const sliderValue = document.getElementById("new");
+const inputSlider = document.getElementById("nice");
+var draw_width=2;
+inputSlider.oninput = (() =>{
+  let value = inputSlider.value;
+  sliderValue.textContent = value;
+  sliderValue.style.left = (2*value) + "%";
+  sliderValue.classList.add("show");
+  draw_width=value;
+})
+inputSlider.onblur = (()=>{
+  sliderValue.classList.remove("show");
+  console.log(inputSlider);
+  console.log(sliderValue);
+});
+
 const canvas = document.getElementById("canvas");
 const range=document.querySelector(".pen-range");
 const txtBtn = document.querySelector(".add-txt");
@@ -11,7 +28,6 @@ context.fillStyle = start_background_color;
 context.fillRect(0, 0, canvas.width, canvas.height);
 
 let draw_color = "black";
-let draw_width = "2";
 let is_drawing = false;
 let restore_array = [];
 let index = -1;

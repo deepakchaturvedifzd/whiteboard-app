@@ -37,14 +37,16 @@
             <span><i class="fas fa-pen" style="font-size: 25px;"></i></span>
         </div>
 
-        <input
-          type="range"
-          min="1"
-          max="50"
-          value="2"
-          class="pen-range"
-          onInput="draw_width=this.value"
-        />
+        <div class="range">
+          <div class="sliderValue">
+            <span id="new">50</span>
+          </div>
+          <div class="fieeld">
+            <div class="value left">0</div>
+            <input type="range" min="1" max="50" value="2" id="nice" />
+            <div class="value right">50</div>
+          </div>
+        </div>
 
         <div class="bg-colors">
           <div
