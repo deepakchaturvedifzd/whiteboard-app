@@ -96,6 +96,9 @@ function draw(event) {
     if (!canvas.classList.contains("drawing")) {
       canvas.classList.add("drawing");
     }
+    if(canvas.classList.contains("makingrect")){
+      canvas.classList.remove("makingrect");
+    }
     context.lineTo(
       event.clientX - canvas.offsetLeft,
       event.clientY - canvas.offsetTop
@@ -136,6 +139,9 @@ function change_color_bg(element) {
     canvas.classList.add("erasing");
     last_color = draw_color;
     draw_color = start_background_color;
+    if(canvas.classList.contains("makingrect")){
+      canvas.classList.remove("makingrect");
+    }
   }
   if (is_erasing) {
     is_erasing = false;
@@ -191,6 +197,9 @@ function erase() {
 
     is_erasing = true;
     canvas.classList.add("erasing");
+    if(canvas.classList.contains("makingrect")){
+      canvas.classList.remove("makingrect");
+    }
   } else {
     is_erasing = false;
     canvas.classList.remove("erasing");
@@ -207,7 +216,9 @@ function is_rect(event)
       is_drawing_rect=false;
     }
     else{
-
+      if(canvas.classList.contains("makingrect")){
+        canvas.classList.remove("makingrect");
+      }
       is_drawing_rect=true;
     }
 
@@ -315,9 +326,7 @@ function handleMouseMove(e) {
       
 
   }
-  if(!is_drawing_rect){
-    canvas.classList.remove("makingrect");
-  }
+  
   document.getElementById('canvas').addEventListener('mousedown', function(e) {
         handleMouseDown(e);
       });
