@@ -232,14 +232,14 @@ canvas {
 }
 
 .drawing {
-  cursor: url("penpng.gif") 0 62, default;
+  cursor: url("Images/penpng.gif") 0 62, default;
   /* cursor: crosshair;*/
 }
 .erasing {
-  cursor: url("eraserpng.png") 0 24, default;
+  cursor: url("Images/eraserpng.png") 0 24, default;
 }
 .typing {
-  cursor: url("txtBox.png") 30 30, default;
+  cursor: url("Images/txtBox.png") 30 30, default;
 }
 .makingrect {
   cursor: crosshair;
@@ -350,7 +350,7 @@ i {
 .help {
   height: 100%;
   width: 100%;
-  background-image: url("help.png");
+  background-image: url("Images/help.png");
   background-repeat: no-repeat;
   background-size: contain;
   cursor: pointer;
@@ -360,7 +360,7 @@ i {
 .save {
   height: 100%;
   width: 100%;
-  background-image: url("save_btn.png");
+  background-image: url("Images/save_btn.png");
   background-repeat: no-repeat;
   background-size: contain;
   cursor: pointer;
