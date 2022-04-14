@@ -22,8 +22,10 @@ const txtBtn = document.querySelector(".add-txt");
 const txtField = document.querySelector(".txt-field");
 canvas.width = window.innerWidth; // - 60;
 canvas.height = window.innerHeight; // - 150;
+const width=canvas.width;
+const height=canvas.height;
 
-let context = canvas.getContext("2d");
+var context = canvas.getContext("2d");
 let start_background_color = "white";
 context.fillStyle = start_background_color;
 context.fillRect(0, 0, canvas.width, canvas.height);
@@ -201,7 +203,8 @@ function erase() {
   }
 }
 var opBool = true;
-function is_rect(event) {
+
+function is_rect() {
   console.log(is_drawing_rect);
   if (is_drawing_rect) {
     is_drawing_rect = false;
@@ -209,8 +212,8 @@ function is_rect(event) {
     is_drawing_rect = true;
     if (is_drawing_rect) {
       canvas.addEventListener("mousedown", handleMouseDown, false);
-      canvas.addEventListener("mousemove", handleMouseMove, false);
       canvas.addEventListener("mouseout", handleMouseOut, false);
+      canvas.addEventListener("mousemove", handleMouseMove, false);
       canvas.addEventListener("mouseup", handleMouseUp, false);
     }
   }
@@ -229,7 +232,7 @@ var offsetX = canvasOffset.left;
 var offsetY = canvasOffset.top;
 
 // this flage is true when the user is dragging the mouse
-var isDown = false;
+let isDown = false;
 
 // these vars will hold the starting mouse position
 var startX;
@@ -240,7 +243,10 @@ function handleMouseDown(e) {
 
     e.preventDefault();
     e.stopPropagation();
-
+    if(is_drawing_circle)
+    is_drawing_rect=false;
+    if(is_drawing_rect)
+    is_drawing_circle=false;
     // save the starting x/y of the rectangle
     startX = parseInt(e.clientX - offsetX);
     startY = parseInt(e.clientY - offsetY);
@@ -256,7 +262,8 @@ function handleMouseUp(e) {
 
     e.preventDefault();
     e.stopPropagation();
-
+    if(is_drawing_circle)
+    is_drawing_rect=false;
     // the drag is over, clear the dragging flag
     isDown = false;
     // console.log(x1, x2, y1, y2)
@@ -269,28 +276,30 @@ function handleMouseOut(e) {
 
     e.preventDefault();
     e.stopPropagation();
-
-    // the drag is over, clear the dragging flag
+    if(is_drawing_circle)
+    is_drawing_rect=false;
+      // the drag is over, clear the dragging flag
     isDown = false;
   }
 }
 
 function handleMouseMove(e) {
   if (opBool) {
+    if (!isDown) {
+      return;
+    }
     console.log("handleMouseMove");
 
     e.preventDefault();
     e.stopPropagation();
 
     // if we're not dragging, just return
-    if (!isDown) {
-      return;
-    }
+    
 
     // get the current mouse position
     mouseX = parseInt(e.clientX - offsetX);
     mouseY = parseInt(e.clientY - offsetY);
-
+    is_drawing_circle=false;
     // Put your mousemove stuff here
 
     // clear the canvas
@@ -298,23 +307,27 @@ function handleMouseMove(e) {
 
     // calculate the rectangle width/height based
     // on starting vs current mouse position
-    var width = mouseX - startX;
-    var height = mouseY - startY;
-
-    // draw a new rect from the start position
-    // to the current mouse position
-    is_drawing = false;
-    // canvas.classList.add("makingrect")
-    context.fillRect(startX, startY, width, height);
-    context.fillStyle = start_background_color;
-    context.strokeRect(startX, startY, width, height);
-    context.strokeStyle = draw_color;
-
-    x1 = startX;
-    y1 = startY;
-    x2 = width;
-    y2 = height;
+    draw_rect();
   }
+}
+function draw_rect(){
+  if(is_drawing_circle)
+  return;
+  var width = mouseX - startX;
+  var height = mouseY - startY;
+
+  // draw a new rect from the start position
+  // to the current mouse position
+  is_drawing = false;
+  // context.beginPath();
+  // canvas.classList.add("makingrect")
+  context.fillRect(startX, startY, width, height);
+  // context.fillStyle = start_background_color;
+  context.strokeRect(startX, startY, width, height);
+  // context.strokeStyle = draw_color;
+  // context.closePath();
+
+  
 }
 
 //
@@ -332,98 +345,151 @@ function handleMouseMove(e) {
 // document.getElementById("canvas").addEventListener("mouseout", function (e) {
 //   handleMouseOut(e, opBool);
 // });
+// const cnv=document.getElementById('canvas');
+var cbool=true;
+function is_circle()
+{
+    
+    if(is_drawing_circle)
+    {
+      // circle(event);
+      is_drawing_circle=false;
+    }
+    else if (!is_drawing_circle) {
+      is_drawing_circle = true;
+      is_drawing_rect=false;
+      if (is_drawing_circle) {
+        console.log("circle")
+        canvas.addEventListener("mousedown", handleMouseDownC, false);
+        canvas.addEventListener("mouseout", handleMouseOutC, false);
+        canvas.addEventListener("mousemove", handleMouseMoveC, false);
+        canvas.addEventListener("mouseup", handleMouseUpC, false);
+      }
+    }
+cbool=is_drawing_circle;
+    
+}
 
-// function is_circle(event)
-// {
-
-//     if(is_drawing_circle)
-//     {
-//       // circle(event);
-//       is_drawing_circle=false;
-//     }
-//     else{
-//       is_drawing_circle=true;
-//       circle(event);
-//     }
-
-//     console.log("circle")
-// }
-
-// function circle(event){
-//   if(is_drawing_circle)
-//   {
-//     var canvasOffset = canvas.getBoundingClientRect();
-//     var offsetX = canvasOffset.left;
-//     var offsetY = canvasOffset.top;
-//     var startX;
-//     var startY;
-//     var isDown = false;
-
-// function drawOval(x, y) {
-//     // context.clearRect(0, 0, canvas.width, canvas.height);
-//     context.fillStyle='green';
-//     context.beginPath();
-//     context.moveTo(startX, startY + (y - startY) / 2);
-//     context.bezierCurveTo(startX, startY, x, startY, x, startY + (y - startY) / 2);
-//     context.bezierCurveTo(x, y, startX, y, startX, startY + (y - startY) / 2);
-//     context.closePath();
-
-//     context.stroke();
-
-// }
-
-// function handleMouseDownC(e) {
-//     e.preventDefault();
-//     e.stopPropagation();
-//     startX = parseInt(e.clientX - offsetX);
-//     startY = parseInt(e.clientY - offsetY);
-//     isDown = true;
-// }
-
-// function handleMouseUpC(e) {
-//     if (!isDown) {
-//         return;
-//     }
-//     e.preventDefault();
-//     e.stopPropagation();
-//     isDown = false;
-// }
-
-// function handleMouseOutC(e) {
-//     if (!isDown) {
-//         return;
-//     }
-//     e.preventDefault();
-//     e.stopPropagation();
-//     isDown = false;
-// }
-
-// function handleMouseMoveC(e) {
-//     if (!isDown) {
-//         return;
-//     }
-//     e.preventDefault();
-//     e.stopPropagation();
-//     mouseX = parseInt(e.clientX - offsetX);
-//     mouseY = parseInt(e.clientY - offsetY);
-//     drawOval(mouseX, mouseY);
-// }
+// function circle(){
+  
 
 //   }
 
-//   document.getElementById('canvas').addEventListener('mousedown', function(e) {
-//         handleMouseDownC(e);
-//       });
-//       document.getElementById('canvas').addEventListener('mousemove', function(e) {
-//         handleMouseMoveC(e);
-//       });
-//       document.getElementById('canvas').addEventListener('mouseup', function(e) {
-//         handleMouseUpC(e);
-//       });
-//       document.getElementById('canvas').addEventListener('mouseout', function(e) {
-//         handleMouseOutC(e);
-//       });
-// }
+
+
+
+       
+
+    function draw_circle(startX,startY,mx,my,start_background_color){
+      let ctx=canvas.getContext('2d');
+      // var radius = Math.sqrt(Math.pow((mx), 2) + Math.pow((my), 2));
+      var dx=mx-startX;
+      var dy=my-startY;
+      var radius=Math.sqrt(dx*dx+dy*dy)
+      // context.clearRect(0,0,cw,ch);
+      ctx.beginPath();
+      ctx.arc(startX,startY,radius,0,Math.PI*2,false);
+      ctx.fillStyle=start_background_color;
+      ctx.fill();
+      
+      // ctx.stroke();
+      ctx.closePath();
+     
+      // is_drawing=false;
+     
+      
+      // context.stroke();
+      if(is_drawing_rect){
+        ctx.fill();
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        cbool=false;
+        is_drawing_circle=false;
+        return;
+        // context.closePath();
+        // ctx.fillStyle=start_background_color;
+        // ctx.fill();
+      }
+    }
+
+    
+    
+    function handleMouseDownC(e) {
+      if (cbool) {
+        console.log("handleMouseDownC");
+    
+        e.preventDefault();
+        e.stopPropagation();
+        if(is_drawing_circle)
+        is_drawing_rect=false;
+        if(is_drawing_rect)
+        is_drawing_circle=false;
+        // save the starting x/y of the rectangle
+        startX = parseInt(e.clientX - offsetX);
+        startY = parseInt(e.clientY - offsetY);
+    
+        // set a flag indicating the drag has begun
+        isDown = true;
+      }
+    }
+    console.log("cirbool" + cbool);
+    function handleMouseUpC(e) {
+      if (cbool) {
+        console.log("handleMouseUpC");
+    
+        e.preventDefault();
+        e.stopPropagation();
+        if(is_drawing_circle)
+        is_drawing_rect=false;
+        // the drag is over, clear the dragging flag
+        isDown = false;
+        // console.log(x1, x2, y1, y2)
+      }
+    }
+    
+    function handleMouseOutC(e) {
+      if (cbool) {
+        console.log("handleMouseOutC");
+    
+        e.preventDefault();
+        e.stopPropagation();
+        if(is_drawing_circle)
+        is_drawing_rect=false;
+          // the drag is over, clear the dragging flag
+        isDown = false;
+      }
+    }
+    
+    function handleMouseMoveC(e){
+      if(!isDown){return;}
+      // tell the browser we're handling this event
+      e.preventDefault();
+      e.stopPropagation();
+    
+      mx=parseInt(e.clientX-offsetX);
+      my=parseInt(e.clientY-offsetY);
+      // is_drawing=false;
+      is_drawing_rect=false;
+      draw_circle(startX,startY,mx,my);
+    
+    }
+
+  
+
+
+
+  // document.getElementById('canvas').addEventListener('mousedown', function(e) {
+  //       handleMouseDownC(e);
+  //     });
+  //     document.getElementById('canvas').addEventListener('mousemove', function(e) {
+  //       handleMouseMoveC(e);
+  //     });
+  //     document.getElementById('canvas').addEventListener('mouseup', function(e) {
+  //       handleMouseUpC(e);
+  //     });
+  //     document.getElementById('canvas').addEventListener('mouseout', function(e) {
+  //       handleMouseOutC(e);
+  //     });
+
 
 function is_text(event) {
   if (is_adding_text) {
@@ -518,3 +584,22 @@ function load() {
   };
 }
 load();
+
+var but = document.getElementById('btn');
+var col = but.style.backgroundColor;
+but.addEventListener('click', function () {
+  // this function executes whenever the user clicks the button
+  col = but.style.backgroundColor = col === 'green' ? 'white' : 'green';
+});
+var but2 = document.getElementById('btn2');
+var col2 = but2.style.backgroundColor;
+but2.addEventListener('click', function () {
+  // this function executes whenever the user clicks the button
+  col2 = but2.style.backgroundColor = col2 === 'green' ? 'white' : 'green';
+});
+var but1 = document.getElementById('btn1');
+var col1 = but1.style.backgroundColor;
+but1.addEventListener('click', function () {
+  // this function executes whenever the user clicks the button
+  col1 = but1.style.backgroundColor = col1 === 'green' ? 'white' : 'green';
+});

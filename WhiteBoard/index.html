@@ -86,25 +86,25 @@
 
         <div class="btn-container">
           <div class="eraser">
-            <button class="erase" onclick="erase()">
+            <button class="erase" onclick="erase()" id="btn1">
               <i class="fa fa-eraser" style="font-size: 25px;"></i>
             </button>
             <span class="tooltiptxt-eraser tooltiptxt">Click to erase !</span>
           </div>
 
           <div class="shape" onclick="is_rect()">
-            <button class="shape-btn">
+            <button class="shape-btn" id="btn">
               <i class="fas fa-square" style="font-size: 25px;"></i>
             </button>
             <span class="tooltiptxt-shape tooltiptxt">Click to add rect</span>
           </div>
-<!-- 
+
           <div class="shape1" onclick="is_circle()">
-            <button class="shape-btn" onclick="is_circle()">
+            <button id="btn2" class="shape-btn">
               <i class="fas fa-circle" style="font-size: 25px;"></i>
             </button>
             <span class="tooltiptxt-shape tooltiptxt">Click to add circle</span>
-          </div> -->
+          </div>
 
           <div class="text" onclick="is_text()">
             <button class="add-txt"><i class="fas fa-font" style="font-size: 25px;"></i></button>
@@ -127,6 +127,8 @@
         </div>
       </div>
     </div>
+    <script src="index.js"></script>
   </body>
   <script src="index.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 </html>
